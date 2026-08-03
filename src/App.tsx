@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import logo from './assets/UT Purity Test Logo.png'
 import './App.css'
 
@@ -79,7 +80,79 @@ const QUESTIONS = [
   'Been arrested by UTPD?',
 ]
 
+function getScoreMessage(score: number): string {
+  if (score >= 70) {
+    return "You've somehow done nothing. Your biggest crime is leaving a GroupMe on mute. Protect this energy."
+  }
+  if (score >= 60) {
+    return "Lightly toasted. You've lived a little but still say 'I don't really go out' with a straight face."
+  }
+  if (score >= 50) {
+    return "Comfortably mid. You've got a few stories, none of which you'd put on LinkedIn."
+  }
+  if (score >= 40) {
+    return "You've been outside. Half your group chat stories start with you and end with 'never again.'"
+  }
+  if (score >= 30) {
+    return "UT has left receipts. People bring you up in stories you weren't even there for."
+  }
+  if (score >= 20) {
+    return "How is your GPA still real. At this point the tower flashes for your weekend plans."
+  }
+  if (score >= 10) {
+    return "Absolute menace. Your friends introduce you with a disclaimer and a smile."
+  }
+  return "You've seen everything West Campus has to offer and then some. Delete this tab before your mom borrows your laptop."
+}
+
 function App() {
+  const [checked, setChecked] = useState<Set<number>>(() => new Set())
+  const [score, setScore] = useState<number | null>(null)
+  const [shareLabel, setShareLabel] = useState('Share your results')
+
+  const showResults = score !== null
+
+  function toggleQuestion(index: number) {
+    setChecked((prev) => {
+      const next = new Set(prev)
+      if (next.has(index)) {
+        next.delete(index)
+      } else {
+        next.add(index)
+      }
+      return next
+    })
+  }
+
+  function calculateScore() {
+    const nextScore = QUESTIONS.length - checked.size
+    setScore(nextScore)
+    setShareLabel('Share your results')
+  }
+
+  async function shareResults() {
+    if (score === null) return
+
+    const shareText = `I scored ${score}/${QUESTIONS.length} on the UT Austin Purity Test`
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'The UT Austin Purity Test',
+          text: shareText,
+          url: window.location.href,
+        })
+        return
+      }
+
+      await navigator.clipboard.writeText(`${shareText}\n${window.location.href}`)
+      setShareLabel('Copied!')
+      window.setTimeout(() => setShareLabel('Share your results'), 2000)
+    } catch {
+      // User cancelled share sheet or clipboard failed — stay quiet.
+    }
+  }
+
   return (
     <main className="page">
       <img
@@ -102,24 +175,47 @@ function App() {
         at the end.
       </p>
       <div className="test-box">
-        <ol className="question-list">
-          {QUESTIONS.map((question, index) => (
-            <li key={question} className="question">
-              <label className="question-label">
-                <span className="question-number">{index + 1}.</span>
-                <input
-                  className="question-checkbox"
-                  type="checkbox"
-                  name={`q-${index + 1}`}
-                />
-                <span className="question-text">{question}</span>
-              </label>
-            </li>
-          ))}
-        </ol>
-        <button type="button" className="calculate-button">
-          Calculate my score
-        </button>
+        {showResults ? (
+          <div className="results">
+            <p className="results-label">Your score:</p>
+            <p className="results-score">{score}</p>
+            <p className="results-message">{getScoreMessage(score)}</p>
+            <button
+              type="button"
+              className="calculate-button"
+              onClick={shareResults}
+            >
+              {shareLabel}
+            </button>
+          </div>
+        ) : (
+          <>
+            <ol className="question-list">
+              {QUESTIONS.map((question, index) => (
+                <li key={question} className="question">
+                  <label className="question-label">
+                    <span className="question-number">{index + 1}.</span>
+                    <input
+                      className="question-checkbox"
+                      type="checkbox"
+                      name={`q-${index + 1}`}
+                      checked={checked.has(index)}
+                      onChange={() => toggleQuestion(index)}
+                    />
+                    <span className="question-text">{question}</span>
+                  </label>
+                </li>
+              ))}
+            </ol>
+            <button
+              type="button"
+              className="calculate-button"
+              onClick={calculateScore}
+            >
+              Calculate my score
+            </button>
+          </>
+        )}
       </div>
     </main>
   )
