@@ -1,0 +1,134 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.logo {
+  display: block;
+  width: min(840px, 92vw);
+  height: auto;
+}
+
+.intro {
+  margin: 1.75rem 0 0;
+  width: 100%;
+  max-width: 38rem;
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 1.05rem;
+  font-weight: normal;
+  line-height: 1.65;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+.caution {
+  margin: 1.25rem 0 0;
+  width: 100%;
+  max-width: 38rem;
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.65;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+.instructions {
+  margin: 1.25rem 0 0;
+  width: 100%;
+  max-width: 38rem;
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.65;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+.test-box {
+  margin-top: 2.75rem;
+  width: 100%;
+  max-width: 44rem;
+  padding: 1.75rem 2rem;
+  border: 2px solid black;
+  box-sizing: border-box;
+}
+
+.question-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.question {
+  margin: 0;
+}
+
+.question-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.question-number {
+  flex-shrink: 0;
+  min-width: 1.75rem;
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 1.05rem;
+  font-weight: normal;
+  line-height: 1.65;
+  text-align: right;
+  color: #1a1a1a;
+}
+
+.question-checkbox {
+  flex-shrink: 0;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.2rem;
+  accent-color: #bf5700;
+  cursor: pointer;
+}
+
+.question-text {
+  flex: 1;
+  max-width: 38rem;
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 1.05rem;
+  font-weight: normal;
+  line-height: 1.65;
+  color: #1a1a1a;
+}
+
+.calculate-button {
+  display: block;
+  margin: 2rem auto 0;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background-color: #ab0505;
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.65;
+  color: #ffffff;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.calculate-button:hover {
+  background-color: #8f0404;
+}
+
+.calculate-button:active {
+  background-color: #730303;
+  transform: scale(0.97);
+}
