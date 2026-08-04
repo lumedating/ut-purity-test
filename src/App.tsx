@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFeatureFlagVariantKey, usePostHog } from '@posthog/react'
 import logo from './assets/UT Purity Test Logo.png'
+import lumeLogo from './assets/Lume Logo (NEW & Cropped).png'
 import './App.css'
 
 const LUME_APP_URL =
@@ -55,9 +56,32 @@ function getScoreTier(score: number): ScoreTier {
   return 'high'
 }
 
+function renderQuestionText(question: string) {
+  const marker = 'Lume'
+  const index = question.indexOf(marker)
+  if (index === -1) return question
+
+  return (
+    <>
+      {question.slice(0, index)}
+      <a
+        className="question-lume-link"
+        href={LUME_APP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(event) => event.stopPropagation()}
+        onMouseDown={(event) => event.stopPropagation()}
+      >
+        {marker}
+      </a>
+      {question.slice(index + marker.length)}
+    </>
+  )
+}
+
 const QUESTIONS = [
   'Current student at UT Austin?',
-  'Lost your UT ID?',
+  'Lost your UT ID at least once?',
   'Changed your major?',
   'Dropped a class after the first week?',
   'Skipped a class without an excuse?',
@@ -73,63 +97,63 @@ const QUESTIONS = [
   'Pulled an all-nighter before an exam?',
   'Spent more than 8 consecutive hours in the PCL?',
   'Fallen asleep in the PCL?',
-  'Cried in Jester?',
-  'Been in class with an ex?',
   "Lied to your parents about how you're doing in class?",
+  'Vaped in class?',
+  'Pregamed a class?',
+  'Pregamed an exam?',
+  'Missed a class due to a hangover?',
   'Painted your face burnt orange for a game?',
-  'Napped on the South Mall?',
   'Jumped into Littlefield Fountain?',
-  'Kissed at the turtle pond?',
-  'Been to the Texas A&M campus?',
+  'Kissed someone at the turtle pond?',
   'Snuck into the Red River Rivalry game?',
+  'Snuck onto the field at DKR?',
   'Gotten drunk at a tailgate party?',
+  'Snuck into a campus building after hours?',
+  'Advertised or sold something on Speedway?',
+  'Taken a CapMetro bus?',
+  'Snuck into the dining hall without a pass?',
+  'Snuck food out of the dining hall?',
+  "Eaten at Cabo Bob's?",
+  "Had a drunk meal at Raising Cane's?",
   'Brought alcohol into on-campus housing?',
   'Gotten a noise complaint at your dorm/apartment?',
-  'Snuck someone into a dorm after hours?',
-  'Hosted a party in your dorm?',
-  'Snuck food out of the dining hall?',
-  'Thrown away an entire meal from a dining hall?',
+  'Snuck someone into your dorm after hours?',
+  'Hosted a party in your dorm/apartment?',
   'Slept over with someone in Jester?',
   'Drank on campus?',
   'Smoked on campus?',
-  'Vaped in class?',
   'Pregamed an org meeting?',
-  'Pregamed a class?',
   'Won a game of beer pong?',
-  'Missed a class due to a hangover?',
-  'Partied on 6th Street?',
-  'Snuck into a 6th Street bar underage?',
-  "Had a drink at Cain & Abel's?",
-  "Eaten at Cabo Bob's?",
-  'Been kicked out of a 6th Street bar?',
-  'Thrown up on 6th Street?',
-  'Been carried home by a friend after a night out?',
-  'Babysat someone you just met who was drunk?',
-  'Been at a party when it was shut down by UTPD?',
-  'Been to a UT frat party?',
-  'Blacked out at a frat party?',
-  'Rushed a fraternity or sorority?',
-  'Gone to a formal with someone you just met?',
   'Bought weed from Glassmith?',
   'Been high at ACL?',
-  'Made a YikYak post that went viral?',
   'Held hands with someone on campus?',
   'Kissed someone on campus?',
+  'Made a YikYak post that went viral?',
   'Been on a date you found on Lume?',
-  'Won a date on Lume with someone in your class?',
-  'Dated someone from a rival school?',
+  'Partied on 6th Street?',
+  'Snuck into a 6th Street bar underage?',
+  'Been kicked out of a 6th Street bar?',
+  'Thrown up on 6th Street?',
   'Made out with a stranger at 6th Street?',
+  'Been carried home by a friend after a night out?',
+  'Babysat someone you just met who was drunk?',
+  'Been to a UT frat party?',
+  'Blacked out at a UT frat party?',
+  'Been at a party while it was shut down by UTPD?',
+  'Hooked up with someone you met at a frat party?',
   'Hooked up with someone on your dorm floor?',
-  'Slept with someone you met at a frat party?',
   'Hooked up on school property?',
-  'Had sex with someone in a different grade?',
-  'Had sex with someone from a rival school while in college?',
-  'Driven to Texas State (San Marcos) to have sex?',
-  'Been skinny dipping at Hippie Hollow (nudist beach)?',
   'Had a walk of shame across campus?',
+  'Kicked out your roommate to hook up?',
+  'Been kicked out by your roommate so they could hook up?',
   'Walked in on your roommate mid-hookup?',
   'Been caught by your roommate mid-hookup?',
-  'Been in a relationship with a TA?',
+  'Hooked up with someone in a different grade?',
+  'Hooked up with someone from a rival school while in college?',
+  'Driven to Texas State (San Marcos) to have sex?',
+  'Been skinny dipping at Hippie Hollow (nudist beach)?',
+  'Hooked up with a TA?',
+  'Hooked up with a professor?',
   'Been arrested by UTPD?',
 ]
 
@@ -282,7 +306,7 @@ function App() {
           </p>
         </>
       )}
-      <div className="test-box">
+      <div className={`test-box${showResults ? ' test-box--results' : ''}`}>
         {showResults ? (
           <div className="results">
             <p className="results-label">Your score:</p>
@@ -299,6 +323,14 @@ function App() {
             >
               {shareLabel}
             </button>
+            <div className="results-sponsor">
+              <span className="results-sponsor-label">Sponsored by</span>
+              <img
+                className="results-sponsor-logo"
+                src={lumeLogo}
+                alt="Lume"
+              />
+            </div>
           </div>
         ) : (
           <>
@@ -314,7 +346,9 @@ function App() {
                       checked={checked.has(index)}
                       onChange={() => toggleQuestion(index)}
                     />
-                    <span className="question-text">{question}</span>
+                    <span className="question-text">
+                      {renderQuestionText(question)}
+                    </span>
                   </label>
                 </li>
               ))}

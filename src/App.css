@@ -55,6 +55,11 @@
   padding: 1.75rem 2rem;
   border: 2px solid black;
   box-sizing: border-box;
+  background-color: #fff5d8;
+}
+
+.test-box--results {
+  margin-top: 2rem;
 }
 
 .question-list {
@@ -93,7 +98,7 @@
   width: 1.15rem;
   height: 1.15rem;
   margin-top: 0.2rem;
-  accent-color: #bf5700;
+  accent-color: #bf5705;
   cursor: pointer;
 }
 
@@ -107,12 +112,28 @@
   color: #1a1a1a;
 }
 
+.question-lume-link {
+  color: #bf5705;
+  font-weight: 700;
+  text-underline-offset: 0.18em;
+}
+
+@media (max-width: 640px) {
+  .question-label {
+    gap: 0.4rem;
+  }
+
+  .question-number {
+    min-width: 1.35rem;
+  }
+}
+
 .calculate-button {
   display: block;
   margin: 2rem auto 0;
   padding: 0.75rem 1.5rem;
   border: none;
-  background-color: #ab0505;
+  background-color: #bf5705;
   font-family: "Merriweather Sans", sans-serif;
   font-size: 1.05rem;
   font-weight: 700;
@@ -125,20 +146,50 @@
 }
 
 .calculate-button:hover {
-  background-color: #8f0404;
+  background-color: #a34a04;
 }
 
 .calculate-button:active {
-  background-color: #730303;
+  background-color: #8a3e03;
   transform: scale(0.97);
 }
 
 .results {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 1.5rem 0;
+  padding: 1.5rem 0 1.25rem;
+  overflow: visible;
+}
+
+.results-sponsor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  white-space: nowrap;
+}
+
+.results-sponsor-label {
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  line-height: 1;
+  color: #1a1a1a;
+  opacity: 0.38;
+  white-space: nowrap;
+}
+
+.results-sponsor-logo {
+  width: 5.25rem;
+  height: auto;
+  opacity: 0.28;
+  filter: brightness(0);
+  pointer-events: none;
+  user-select: none;
 }
 
 .results-label {
@@ -181,29 +232,20 @@
 }
 
 .lume-promo {
-  margin: 2rem 0 0;
-  max-width: none;
-  padding: 0 1rem;
+  margin: 1.5rem 0 0;
+  width: 100%;
+  max-width: 38rem;
+  padding: 0;
   font-family: "Merriweather Sans", sans-serif;
-  font-size: clamp(0.7rem, 2.4vw, 1.05rem);
+  font-size: 1.05rem;
   font-weight: normal;
   line-height: 1.65;
   text-align: center;
   color: #1a1a1a;
-  white-space: nowrap;
 }
 
 .lume-promo-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  color: inherit;
+  color: #bf5705;
   font-weight: 700;
   text-underline-offset: 0.18em;
-}
-
-.lume-promo-arrow {
-  width: 0.85em;
-  height: 0.85em;
-  flex-shrink: 0;
 }
