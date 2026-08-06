@@ -221,6 +221,15 @@ function App() {
   const promo = scoreTier !== null ? PROMO_COPY[scoreTier][variantKey] : null;
 
   useEffect(() => {
+    console.log("[purity-test-cta]", {
+      promoVariant,
+      variantKey,
+      scoreTier,
+      score,
+    });
+  }, [promoVariant, variantKey, scoreTier, score]);
+
+  useEffect(() => {
     if (!showResults || score === null || scoreTier === null) return;
     posthog.capture("results_viewed", {
       promo_variant: variantKey,
