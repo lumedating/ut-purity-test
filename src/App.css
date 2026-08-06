@@ -60,6 +60,8 @@
 
 .test-box--results {
   margin-top: 2rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .question-list {
@@ -118,16 +120,6 @@
   text-underline-offset: 0.18em;
 }
 
-@media (max-width: 640px) {
-  .question-label {
-    gap: 0.4rem;
-  }
-
-  .question-number {
-    min-width: 1.35rem;
-  }
-}
-
 .calculate-button {
   display: block;
   margin: 2rem auto 0;
@@ -160,36 +152,54 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 1.5rem 0 1.25rem;
+  padding: 0.5rem 0 0.25rem;
   overflow: visible;
 }
 
-.results-sponsor {
+.results-actions {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  margin-top: 1rem;
-  white-space: nowrap;
+  gap: 0.6rem;
+  margin-top: 2rem;
 }
 
-.results-sponsor-label {
-  font-family: "Merriweather Sans", sans-serif;
-  font-size: 0.75rem;
-  font-weight: 300;
-  line-height: 1;
-  color: #1a1a1a;
-  opacity: 0.38;
-  white-space: nowrap;
+.results-actions .calculate-button {
+  margin: 0;
 }
 
-.results-sponsor-logo {
-  width: 5.25rem;
-  height: auto;
-  opacity: 0.28;
-  filter: brightness(0);
-  pointer-events: none;
-  user-select: none;
+.copy-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  aspect-ratio: 1;
+  width: auto;
+  min-width: 2.85rem;
+  padding: 0;
+  border: 2px solid #bf5705;
+  background-color: transparent;
+  color: #bf5705;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.copy-link-button:hover {
+  background-color: rgba(191, 87, 5, 0.08);
+}
+
+.copy-link-button:active {
+  background-color: rgba(191, 87, 5, 0.14);
+  transform: scale(0.97);
+}
+
+.copy-link-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  display: block;
 }
 
 .results-label {
@@ -212,7 +222,7 @@
 }
 
 .results-percentile {
-  margin: 1.25rem 0 0;
+  margin: 0.85rem 0 0;
   max-width: 32rem;
   font-family: "Merriweather Sans", sans-serif;
   font-size: 1.05rem;
@@ -232,20 +242,117 @@
 }
 
 .lume-promo {
-  margin: 1.5rem 0 0;
+  position: relative;
+  overflow: hidden;
+  margin: 1rem 0 0;
   width: 100%;
-  max-width: 38rem;
-  padding: 0;
-  font-family: "Merriweather Sans", sans-serif;
-  font-size: 1.05rem;
-  font-weight: normal;
-  line-height: 1.65;
+  max-width: 44rem;
+  padding: 2rem 1.75rem;
+  box-sizing: border-box;
+  background-color: #b700ff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
   text-align: center;
-  color: #1a1a1a;
+}
+
+.lume-promo::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  z-index: 0;
+  background-image: url("./assets/Dot Background.png");
+  background-repeat: repeat;
+  background-position: center;
+  background-size: 850px;
+  mix-blend-mode: screen;
+  transform: rotate(-5deg);
+  pointer-events: none;
+}
+
+.lume-promo-text {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: "Unbounded", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #ffffff;
 }
 
 .lume-promo-link {
-  color: #bf5705;
-  font-weight: 700;
+  color: #ffffff;
+  font-weight: 600;
   text-underline-offset: 0.18em;
+}
+
+.lume-promo-brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.lume-promo-logo {
+  width: 4.5rem;
+  height: auto;
+  display: block;
+  mix-blend-mode: screen;
+  user-select: none;
+  pointer-events: none;
+}
+
+.lume-promo-divider {
+  flex-shrink: 0;
+  width: 1.5px;
+  height: 1.35rem;
+  background-color: rgba(255, 255, 255, 0.55);
+}
+
+.lume-promo-tagline {
+  margin: 0;
+  max-width: 10rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 640px) {
+  .intro,
+  .caution,
+  .question-number,
+  .question-text,
+  .calculate-button,
+  .results-label,
+  .results-percentile,
+  .results-message,
+  .lume-promo-text {
+    font-size: 0.92rem;
+  }
+
+  .instructions {
+    font-size: 0.8rem;
+  }
+
+  .results-score {
+    font-size: 3.75rem;
+  }
+
+  .question-label {
+    gap: 0.4rem;
+  }
+
+  .question-number {
+    min-width: 1.35rem;
+  }
+
+  .question-checkbox {
+    width: 1rem;
+    height: 1rem;
+  }
 }
